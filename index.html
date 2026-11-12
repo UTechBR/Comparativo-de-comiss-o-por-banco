@@ -1,0 +1,704 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Comparativo de Comissão · Única Promotora</title>
+<style>
+  :root {
+    --color-fg: #2b2a2b; --color-fg-muted: #6b6869; --color-bg: #f6f5f5; --color-panel: #ffffff;
+    --color-border-line: #e3e0e0; --color-ok: #2e7d32; --color-warn: #d98e04; --color-bad: #c62828;
+    --font-anthropic-sans: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --cds-font-size-caption: 12.5px; --cds-font-size-body: 14px; --cds-font-size-heading: 17px; --cds-font-size-title: 20px;
+    --cds-font-weight-medium: 600;
+    --cds-gap-xs: 4px; --cds-gap-sm: 8px; --cds-gap-md: 12px; --cds-gap-lg: 20px; --cds-gap-xl: 32px;
+    --cds-pad-xs: 4px; --cds-pad-sm: 8px; --cds-pad-md: 12px; --cds-pad-lg: 20px; --cds-pad-xl: 32px;
+    --cds-radius: 10px;
+    --cds-chart-grid: #ece9e9; --cds-chart-axis: #b9b5b5; --cds-text-secondary: #6b6869;
+    --cds-surface-popover: #ffffff; --cds-border: #e3e0e0; --cds-shadow-popover: 0 6px 24px rgba(0,0,0,.12);
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --color-fg: #f0eeee; --color-fg-muted: #a9a5a5; --color-bg: #1b1a1a; --color-panel: #252323;
+      --color-border-line: #3a3737; --color-ok: #66bb6a; --color-warn: #f2b33d; --color-bad: #ef5350;
+      --cds-chart-grid: #333030; --cds-chart-axis: #5a5656; --cds-text-secondary: #a9a5a5;
+      --cds-surface-popover: #2c2a2a; --cds-border: #444040; --cds-shadow-popover: 0 6px 24px rgba(0,0,0,.5);
+      color-scheme: dark;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--color-bg); color: var(--color-fg); font-family: var(--font-anthropic-sans); font-size: 14px; }
+  #dash-root { max-width: 1200px; margin: 0 auto; padding-block: 24px 40px;
+               padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  .dash-select { appearance: none; font: inherit; font-size: var(--cds-font-size-caption); color: var(--color-fg);
+                 background-color: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: 8px;
+                 padding: 6px 30px 6px 10px; cursor: pointer;
+                 background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23888'/%3E%3C/svg%3E");
+                 background-repeat: no-repeat; background-position: right 10px center; }
+  .dash-select:focus-visible { outline: 2px solid #D5030C; outline-offset: 2px; }
+  .un-foot { margin-top: 8px; font-size: 12px; color: var(--color-fg-muted); }
+</style>
+<style>
+  .un { --un-red: #D5030C; --un-red-soft: rgba(213, 3, 12, .38); --un-ink: #363435; --un-bonus: var(--color-fg-muted); --un-ink-bar: var(--color-fg-muted);
+        display: grid; gap: var(--cds-gap-xl); font-family: var(--font-anthropic-sans); color: var(--color-fg); }
+  .un-hero { position: relative; overflow: hidden; background: #fff; color: #363435; border-radius: var(--cds-radius);
+             border: 1px solid var(--color-border-line); padding-block: var(--cds-pad-lg); padding-inline: 132px var(--cds-pad-lg);
+             display: flex; align-items: center; gap: var(--cds-gap-lg); min-height: 132px; }
+  .un-swoosh { position: absolute; left: 0; top: 0; height: 100%; width: 120px; }
+  .un-hero-txt { flex: 1; min-width: 0; display: grid; gap: var(--cds-gap-xs); }
+  .un-eyebrow { font-size: var(--cds-font-size-caption); letter-spacing: .14em; text-transform: uppercase; color: #D5030C; font-weight: 600; }
+  .un-hero h1 { margin: 0; font-size: clamp(22px, 3.2vw, 32px); line-height: 1.15; font-weight: 700; color: #363435; text-wrap: balance; }
+  .un-hero p { margin: 0; font-size: var(--cds-font-size-caption); color: #6b6869; }
+  .un-atual { justify-self: start; margin-top: 6px; display: inline-flex; align-items: center; gap: 6px; font-size: var(--cds-font-size-caption); font-weight: 600;
+              color: #363435; background: #f3f1f1; border: 1px solid #e3e0e0; border-radius: 999px; padding: 3px 10px; }
+  .un-atual::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #D5030C; }
+  .un-logo { width: 92px; height: auto; flex: none; }
+  @media (max-width: 560px) { .un-hero { padding-inline: 76px var(--cds-pad-md); } .un-swoosh { width: 64px; } .un-logo { width: 64px; } }
+
+  .un-take { margin: 0; font-size: var(--cds-font-size-heading); line-height: 1.45; max-width: 72ch; }
+  .un-take b { color: var(--un-red); font-weight: 700; }
+
+  .un-kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: var(--cds-gap-md); }
+  .un-kpi { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius);
+            padding: var(--cds-pad-lg); display: grid; gap: var(--cds-gap-xs); align-content: start; }
+  .un-kpi-l { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+  .un-kpi-v { font-size: 30px; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1.1; }
+  .un-kpi-v .u { font-size: 16px; font-weight: 600; color: var(--color-fg-muted); margin-left: 2px; }
+  .un-kpi-n { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+  .un-kpi { border-top: 6px solid var(--un-red); }
+  .un-kpi.k2 { border-top-color: var(--color-fg); }
+  .un-kpi.warn { border-top-color: var(--color-warn); }
+
+  .un h2 { margin: 0; font-size: var(--cds-font-size-title); font-weight: 700; display: flex; align-items: center; gap: 10px; }
+  .un h2::before { content: ""; width: 6px; height: 1.1em; background: var(--un-red); border-radius: 3px; }
+  .un-sub { margin: 4px 0 0; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+
+  .un-podios { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--cds-gap-lg); }
+  .un-podio-box { display: grid; gap: var(--cds-gap-sm); align-content: start; min-width: 0; }
+  .un-podio-box h3 { margin: 0; font-size: var(--cds-font-size-body); font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--color-fg-muted); }
+  .un-podio { display: grid; gap: var(--cds-gap-sm); min-height: 300px; }
+  .un-podio-row { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); min-height: 140px; align-items: stretch; }
+  .un-podio-row .un-op { align-items: start; }
+  .un-quadros { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: var(--cds-gap-lg); }
+  .un-quadro { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); overflow: hidden; display: grid; align-content: start; min-width: 0; }
+  .un-quadro-h { padding: 12px var(--cds-pad-lg); background: var(--un-red); color: #fff; font-weight: 700; font-size: var(--cds-font-size-body); letter-spacing: .04em; text-transform: uppercase; }
+  .un-quadro.q-baixo .un-quadro-h { background: #363435; }
+  .un-quadro-b { display: grid; min-height: 240px; align-content: start; }
+  .un-qrow { display: grid; grid-template-columns: 40px 1fr auto; gap: var(--cds-gap-md); align-items: center; padding: 14px var(--cds-pad-lg); border-top: 1px solid var(--color-border-line); }
+  .un-qrow:first-child { border-top: 0; }
+  .un-qrow.r1 { background: color-mix(in srgb, var(--un-red) 6%, var(--color-panel)); }
+  .un-qrow .un-badge { width: 40px; height: 40px; font-size: 14px; }
+  .un-qrow.r2 .un-badge { background: var(--un-ink); }
+  .un-qrow.r3 .un-badge { background: transparent; color: var(--color-fg); border: 2px solid var(--color-fg-muted); }
+  .un-qrow .nm { font-weight: 700; }
+  .un-qrow .dt { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); overflow-wrap: anywhere; }
+  .un-qrow .vl { text-align: right; font-variant-numeric: tabular-nums; }
+  .un-qrow .vl b { display: block; font-size: 24px; color: var(--un-red); line-height: 1.05; }
+  .un-qrow .vl span { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); white-space: nowrap; }
+  .un-qvazio { padding: var(--cds-pad-lg); color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); }
+  .un-op-r { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); font-variant-numeric: tabular-nums; }
+  .un-op { display: grid; grid-template-columns: 44px 1fr auto; gap: var(--cds-gap-md); align-items: center;
+           background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-md); }
+  .un-op { border-left: 5px solid var(--color-fg-muted); }
+  .un-op.p1 { border-left-color: var(--un-red); background: color-mix(in srgb, var(--un-red) 6%, var(--color-panel)); }
+  .un-op.p2 { border-left-color: var(--color-fg); background: color-mix(in srgb, var(--color-fg) 4%, var(--color-panel)); }
+  .un-op.p3 { border-left-color: var(--color-fg-muted); }
+  .un-badge { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; font-size: 15px;
+              background: var(--un-red); color: #fff; }
+  .un-op.p2 .un-badge { background: var(--un-ink); }
+  .un-op.p3 .un-badge { background: transparent; color: var(--color-fg); border: 2px solid var(--color-fg-muted); }
+  .un-op-b { min-width: 0; display: grid; gap: 2px; }
+  .un-op-n { font-weight: 700; font-size: var(--cds-font-size-body); }
+  .un-op-t { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); overflow-wrap: anywhere; }
+  .un-op-c { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); font-variant-numeric: tabular-nums; }
+  .un-op-v { text-align: right; font-variant-numeric: tabular-nums; }
+  .un-op-v b { display: block; font-size: 26px; font-weight: 700; color: var(--un-red); line-height: 1; }
+  .un-op-v span { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+
+  .un-card { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-lg); display: grid; gap: var(--cds-gap-md); min-width: 0; }
+  .un-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--cds-gap-md); }
+  .un-legend { display: flex; flex-wrap: wrap; gap: var(--cds-gap-md); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+  .un-legend i { display: inline-block; width: 12px; height: 12px; border-radius: 2px; vertical-align: -2px; margin-right: 6px; }
+  .un-legend i.f { background: var(--un-red); } .un-legend i.b { background: var(--un-bonus); } .un-legend i.a { background: var(--un-red-soft); }
+  .un-legend i.r { width: 3px; height: 14px; background: var(--color-fg); border-radius: 0; }
+  .un-sortlbl { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); display: flex; align-items: center; gap: 8px; }
+  .un-chart { position: relative; min-height: 370px; }
+  .un-scroll { overflow-x: auto; }
+  .un-chart svg { display: block; }
+  .un-chart .tick text { fill: var(--cds-text-secondary); font-size: var(--cds-font-size-caption); }
+  .un-chart .tick line { stroke: var(--cds-chart-grid); }
+  .un-chart .domain { display: none; }
+  .un-tip { position: absolute; pointer-events: none; background: var(--cds-surface-popover); border: 1px solid var(--cds-border);
+            box-shadow: var(--cds-shadow-popover); border-radius: 8px; padding: 10px 12px; font-size: var(--cds-font-size-caption);
+            line-height: 1.5; max-width: 280px; z-index: 2; font-variant-numeric: tabular-nums; }
+  .un-tip strong { display: block; font-size: var(--cds-font-size-body); }
+  .un-tip .m { color: var(--cds-text-secondary); }
+
+  .un-tw { overflow-x: auto; }
+  .un-table { width: 100%; border-collapse: collapse; font-size: var(--cds-font-size-caption); font-variant-numeric: tabular-nums; min-width: 1080px; }
+  .un-table th { text-align: left; font-weight: 600; padding: 8px; border-bottom: 2px solid var(--color-border-line); vertical-align: bottom; }
+  .un-table th.g-rep { border-bottom-color: var(--color-fg-muted); } .un-table th.g-rec { border-bottom-color: var(--un-red); }
+  .un-table td { padding: 7px 8px; border-bottom: 1px solid var(--color-border-line); vertical-align: top; }
+  .un-table .n { text-align: right; white-space: nowrap; }
+  .un-table .tot { font-weight: 700; }
+  .un-table td.rec { color: var(--un-red); font-size: var(--cds-font-size-body); }
+  .un-table tr.top td { background: color-mix(in srgb, var(--un-red) 7%, transparent); }
+  .un-table .pos { font-weight: 700; text-align: center; }
+  .un-table .neg { color: var(--color-bad); font-weight: 700; } .un-table .zero { color: var(--color-warn); font-weight: 700; }
+  .un-table .tab { min-width: 220px; } .un-table .cond { min-width: 150px; color: var(--color-fg-muted); }
+
+  .un-notes { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+  .un-notes summary { cursor: pointer; font-weight: 600; color: var(--color-fg); }
+  .un-notes ul { margin: 8px 0 0; padding-left: 18px; display: grid; gap: 4px; max-width: 90ch; }
+  .un-conv { display: flex; flex-wrap: wrap; align-items: center; gap: var(--cds-gap-md); }
+  .un-conv-sel { font-size: var(--cds-font-size-body); font-weight: 600; min-width: 220px; padding-top: 8px; padding-bottom: 8px; }
+  .un-ctl { display: flex; flex-wrap: wrap; align-items: center; gap: var(--cds-gap-sm) var(--cds-gap-md); }
+  .un-conv { row-gap: var(--cds-gap-md); column-gap: var(--cds-gap-xl); }
+  .un-conv-l { font-size: var(--cds-font-size-caption); text-transform: uppercase; letter-spacing: .1em; color: var(--color-fg-muted); font-weight: 600; }
+  .un-seg { display: inline-flex; flex-wrap: wrap; gap: 2px; padding: 3px; border: 1px solid var(--color-border-line); border-radius: 999px; background: var(--color-panel); }
+  .un-seg button { font: inherit; font-size: var(--cds-font-size-body); font-weight: 600; border: 0; background: transparent; color: var(--color-fg-muted);
+                   padding: 8px 18px; border-radius: 999px; cursor: pointer; }
+  .un-seg button[aria-pressed="true"] { background: var(--un-red); color: #fff; }
+  .un-seg button:focus-visible { outline: 2px solid var(--un-red); outline-offset: 2px; }
+  .un-pick { position: relative; }
+  .un-pick > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px;
+                       border: 1px solid var(--color-border-line); border-radius: 999px; background: var(--color-panel); font-weight: 600; }
+  .un-pick > summary::-webkit-details-marker { display: none; }
+  .un-pick > summary::after { content: ""; width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 6px solid var(--color-fg-muted); }
+  .un-pick[open] > summary { border-color: var(--un-red); }
+  .un-pick-panel { position: absolute; z-index: 5; top: calc(100% + 6px); left: 0; width: min(420px, calc(100vw - 32px)); background: var(--cds-surface-popover);
+                   border: 1px solid var(--cds-border); box-shadow: var(--cds-shadow-popover); border-radius: var(--cds-radius); padding: var(--cds-pad-md); display: grid; gap: var(--cds-gap-sm); }
+  .un-pick-acts { display: flex; gap: var(--cds-gap-sm); flex-wrap: wrap; }
+  .un-pick-acts button { font: inherit; font-size: var(--cds-font-size-caption); font-weight: 600; border: 1px solid var(--color-border-line); background: var(--color-panel);
+                         color: var(--color-fg); border-radius: 999px; padding: 5px 12px; cursor: pointer; }
+  .un-busca { font: inherit; font-size: var(--cds-font-size-body); width: 100%; padding: 8px 12px 8px 34px; border: 1px solid var(--color-border-line);
+               border-radius: 8px; background-color: var(--color-panel); color: var(--color-fg);
+               background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2.2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M20 20l-3.5-3.5'/%3E%3C/svg%3E");
+               background-repeat: no-repeat; background-position: 10px center; }
+  .un-busca:focus-visible { outline: 2px solid var(--un-red); outline-offset: 1px; border-color: transparent; }
+  .un-pick-vazio { padding: 8px 6px; color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); }
+  .un-pick-list { display: grid; gap: 2px; max-height: 320px; overflow-y: auto; }
+  .un-pick-list label { display: flex; align-items: center; gap: 8px; padding: 5px 6px; border-radius: 6px; cursor: pointer; font-size: var(--cds-font-size-body); }
+  .un-pick-list label:hover { background: color-mix(in srgb, var(--un-red) 6%, transparent); }
+  .un-pick-list input { accent-color: var(--un-red); width: 16px; height: 16px; }
+  .un-pick-list .p { margin-left: auto; color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); font-variant-numeric: tabular-nums; }
+  .un-chips.vazio { display: none; }
+  .un-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .un-chip { font-size: var(--cds-font-size-caption); font-weight: 600; padding: 4px 10px; border-radius: 999px; background: color-mix(in srgb, var(--un-red) 10%, var(--color-panel)); color: var(--color-fg); }
+  .un-op-pos { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+  .un-src { display: block; margin-top: 3px; color: var(--color-fg-muted); font-size: 11.5px; }
+  [data-dash-source-state=refreshing] { opacity: .5; }
+</style>
+</head>
+<body>
+<div id="dash-root">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<script>
+  window.UN_DADOS = [{"convenio": "CLT", "faixa": "acima20", "banco": "BANCO BMG", "prazo": 60, "tabela": "CONSIGNADO PRIVADO E-SOCIAL - 4760 - COM SEGURO", "condicao": "Padrão", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 6.0, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 6.0, "bonus_rec": 0.0, "adiant_rec": 1.0}, {"convenio": "CLT", "faixa": "acima20", "banco": "BANCO C6 BANK", "prazo": 60, "tabela": "Trabalhador Seg Plan 13 - 800084", "condicao": "Padrão", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 6.7, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 6.0, "bonus_rec": 0.0, "adiant_rec": 1.7}, {"convenio": "CLT", "faixa": "acima20", "banco": "BANCO CREFAZ", "prazo": 48, "tabela": "CREFAZ - CONSIGNADO PRIVADO CLT", "condicao": "Padrão", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 3.5, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 4.5, "bonus_rec": 0.0, "adiant_rec": 0.0}, {"convenio": "CLT", "faixa": "acima20", "banco": "BANCO HAPPY CONSIG", "prazo": 48, "tabela": "HAPPY - CONSIGNADO PRIVADO CLT - COM SEGURO", "condicao": "Contrato de R$ 1.800,00 a R$ 25.000,00", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 6.0, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 6.5, "bonus_rec": 0.5, "adiant_rec": 0.0}, {"convenio": "CLT", "faixa": "acima20", "banco": "BANCO MERCANTIL DO BRASIL", "prazo": 48, "tabela": "MERCANTIL - CONSIGNADO PRIVADO - 13728173/13728174 - COM SEGURO (PELO BRUTO)", "condicao": "Padrão", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 7.2, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 6.0, "bonus_rec": 2.0, "adiant_rec": 0.0}, {"convenio": "CLT", "faixa": "acima20", "banco": "BANCO PAN", "prazo": 36, "tabela": "CONSIG_PRIVADO_NOV_ML_NORMAL", "condicao": "Contrato de R$ 200,00 a R$ 40.000,00 · Taxa 1,98% a 4,98%", "fonte": "PAN", "base": "12/11/2026", "obs": "Bônus = comissão do seguro (prêmio × fator 15%).", "flat_rep": null, "bonus_rep": null, "adiant_rep": null, "flat_rec": 5.0, "bonus_rec": 1.35, "adiant_rec": 0.0}, {"convenio": "CLT", "faixa": "acima20", "banco": "BANCO VCTEX", "prazo": 48, "tabela": "Tabela CLTeX Com Seguro TX 4,98 - Com Seguro", "condicao": "Padrão", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 8.5, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 9.5, "bonus_rec": 0.0, "adiant_rec": 0.0}, {"convenio": "CLT", "faixa": "acima20", "banco": "FACTA FINANCEIRA", "prazo": 60, "tabela": "71862 - NOVO GOLD PREMIUM", "condicao": "Padrão", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 8.0, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 6.0, "bonus_rec": 0.0, "adiant_rec": 3.0}, {"convenio": "CLT", "faixa": "acima20", "banco": "HANDMAIS (Hand+)", "prazo": 68, "tabela": "HAND 4 - PRIME 1", "condicao": "Padrão", "fonte": "Handmais", "base": "12/11/2026", "obs": "Prazo 68x conforme a imagem do banco; conferir se é 48x.", "flat_rep": null, "bonus_rep": null, "adiant_rep": null, "flat_rec": 5.5, "bonus_rec": 0.0, "adiant_rec": 0.0}, {"convenio": "CLT", "faixa": "acima20", "banco": "PRESENÇA BANK", "prazo": 36, "tabela": "Privado CLT - |C/seg| 36x - 11592", "condicao": "Padrão", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 6.0, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 7.0, "bonus_rec": 0.0, "adiant_rec": 0.0}, {"convenio": "CLT", "faixa": "acima20", "banco": "SOMA - 321 BANK", "prazo": 60, "tabela": "2118 - NOVO SELECT - 60X - COM SEGURO", "condicao": "Contrato de R$ 350,00 a R$ 26.000,00 · Taxa 4,05%", "fonte": "Soma", "base": "12/11/2026", "obs": "", "flat_rep": null, "bonus_rep": null, "adiant_rep": null, "flat_rec": 6.0, "bonus_rec": 0.0, "adiant_rec": 0.0}, {"convenio": "CLT", "faixa": "acima20", "banco": "SOMA - CELCOIN", "prazo": 48, "tabela": "2267 - CLT Celcoin NT 5 - 48X - COM SEGURO", "condicao": "Contrato de R$ 700,00 a R$ 22.000,00 · Taxa 4,98%", "fonte": "Soma", "base": "12/11/2026", "obs": "", "flat_rep": null, "bonus_rep": null, "adiant_rep": null, "flat_rec": 9.5, "bonus_rec": 0.0, "adiant_rec": 0.0}, {"convenio": "CLT", "faixa": "acima20", "banco": "SOMA - J17", "prazo": 48, "tabela": "3323 - CLT J17 - 48x - COM SEGURO", "condicao": "Contrato de R$ 300,00 a R$ 30.000,00 · Taxa 4,97%", "fonte": "Soma", "base": "12/11/2026", "obs": "", "flat_rep": null, "bonus_rep": null, "adiant_rep": null, "flat_rec": 8.5, "bonus_rec": 0.0, "adiant_rec": 0.0}, {"convenio": "CLT", "faixa": "acima20", "banco": "V8 DIGITAL", "prazo": 48, "tabela": "CLT ACELERA - COM SEGURO", "condicao": "Padrão", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 8.0, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 9.5, "bonus_rec": 0.0, "adiant_rec": 0.0}, {"convenio": "CLT", "faixa": "ate20", "banco": "BANCO BMG", "prazo": 60, "tabela": "CONSIGNADO PRIVADO E-SOCIAL - 4760 - COM SEGURO", "condicao": "Padrão", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 6.0, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 6.0, "bonus_rec": 0.0, "adiant_rec": 1.0}, {"convenio": "CLT", "faixa": "ate20", "banco": "BANCO C6 BANK", "prazo": 60, "tabela": "Trabalhador Seg Plan 13 - 800084", "condicao": "Padrão", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 6.7, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 6.0, "bonus_rec": 0.0, "adiant_rec": 1.7}, {"convenio": "CLT", "faixa": "ate20", "banco": "BANCO CREFAZ", "prazo": 48, "tabela": "CREFAZ - CONSIGNADO PRIVADO CLT", "condicao": "Padrão", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 3.5, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 4.5, "bonus_rec": 0.0, "adiant_rec": 0.0}, {"convenio": "CLT", "faixa": "ate20", "banco": "BANCO HAPPY CONSIG", "prazo": 48, "tabela": "HAPPY - CONSIGNADO PRIVADO CLT - COM SEGURO", "condicao": "Contrato de R$ 1.800,00 a R$ 25.000,00", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 6.0, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 6.5, "bonus_rec": 0.5, "adiant_rec": 0.0}, {"convenio": "CLT", "faixa": "ate20", "banco": "BANCO MERCANTIL DO BRASIL", "prazo": 48, "tabela": "MERCANTIL - CONSIGNADO PRIVADO - 13728173/13728174 - COM SEGURO (PELO BRUTO)", "condicao": "Padrão", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 7.2, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 6.0, "bonus_rec": 2.0, "adiant_rec": 0.0}, {"convenio": "CLT", "faixa": "ate20", "banco": "BANCO PAN", "prazo": 36, "tabela": "CONSIG_PRIVADO_NOV_ML_NORMAL", "condicao": "Contrato de R$ 200,00 a R$ 40.000,00 · Taxa 1,98% a 4,98%", "fonte": "PAN", "base": "12/11/2026", "obs": "Bônus = comissão do seguro (prêmio × fator 15%).", "flat_rep": null, "bonus_rep": null, "adiant_rep": null, "flat_rec": 5.0, "bonus_rec": 1.35, "adiant_rec": 0.0}, {"convenio": "CLT", "faixa": "ate20", "banco": "BANCO VCTEX", "prazo": 48, "tabela": "Tabela CLTeX Com Seguro TX 4,98 - Com Seguro", "condicao": "Padrão", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 8.5, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 9.5, "bonus_rec": 0.0, "adiant_rec": 0.0}, {"convenio": "CLT", "faixa": "ate20", "banco": "FACTA FINANCEIRA", "prazo": 60, "tabela": "71862 - NOVO GOLD PREMIUM", "condicao": "Padrão", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 8.0, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 6.0, "bonus_rec": 0.0, "adiant_rec": 3.0}, {"convenio": "CLT", "faixa": "ate20", "banco": "HANDMAIS (Hand+)", "prazo": 68, "tabela": "HAND 4 - PRIME 1", "condicao": "Padrão", "fonte": "Handmais", "base": "12/11/2026", "obs": "Prazo 68x conforme a imagem do banco; conferir se é 48x.", "flat_rep": null, "bonus_rep": null, "adiant_rep": null, "flat_rec": 5.5, "bonus_rec": 0.0, "adiant_rec": 0.0}, {"convenio": "CLT", "faixa": "ate20", "banco": "PRESENÇA BANK", "prazo": 48, "tabela": "Privado CLT - |C/seg| 48x - 10917", "condicao": "Contrato de R$ 100,00 a R$ 15.000,00", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 8.5, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 9.5, "bonus_rec": 0.0, "adiant_rec": 0.0}, {"convenio": "CLT", "faixa": "ate20", "banco": "SOMA - 321 BANK", "prazo": 60, "tabela": "2118 - NOVO SELECT - 60X - COM SEGURO", "condicao": "Contrato de R$ 350,00 a R$ 26.000,00 · Taxa 4,05%", "fonte": "Soma", "base": "12/11/2026", "obs": "", "flat_rep": null, "bonus_rep": null, "adiant_rep": null, "flat_rec": 6.0, "bonus_rec": 0.0, "adiant_rec": 0.0}, {"convenio": "CLT", "faixa": "ate20", "banco": "SOMA - CELCOIN", "prazo": 48, "tabela": "2267 - CLT Celcoin NT 5 - 48X - COM SEGURO", "condicao": "Contrato de R$ 700,00 a R$ 22.000,00 · Taxa 4,98%", "fonte": "Soma", "base": "12/11/2026", "obs": "", "flat_rep": null, "bonus_rep": null, "adiant_rep": null, "flat_rec": 9.5, "bonus_rec": 0.0, "adiant_rec": 0.0}, {"convenio": "CLT", "faixa": "ate20", "banco": "SOMA - J17", "prazo": 48, "tabela": "3323 - CLT J17 - 48x - COM SEGURO", "condicao": "Contrato de R$ 300,00 a R$ 30.000,00 · Taxa 4,97%", "fonte": "Soma", "base": "12/11/2026", "obs": "", "flat_rep": null, "bonus_rep": null, "adiant_rep": null, "flat_rec": 8.5, "bonus_rec": 0.0, "adiant_rec": 0.0}, {"convenio": "CLT", "faixa": "ate20", "banco": "SOMA - UY3", "prazo": 36, "tabela": "3238 - CLT - NT 5C - 36X - Com Seguro", "condicao": "Contrato de R$ 700,00 a R$ 16.500,00 · Taxa 4,98%", "fonte": "Soma", "base": "12/11/2026", "obs": "", "flat_rep": null, "bonus_rep": null, "adiant_rep": null, "flat_rec": 8.0, "bonus_rec": 0.0, "adiant_rec": 0.0}, {"convenio": "CLT", "faixa": "ate20", "banco": "V8 DIGITAL", "prazo": 48, "tabela": "CLT ACELERA - COM SEGURO", "condicao": "Padrão", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 8.0, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 9.5, "bonus_rec": 0.0, "adiant_rec": 0.0}, {"convenio": "GOV MG", "faixa": "acima20", "banco": "AMIGOZ", "prazo": 120, "tabela": "GOV MINAS NORMAL - Empréstimo - 2,10%", "condicao": "Padrão", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 6.5, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 6.0, "bonus_rec": 2.0, "adiant_rec": 0.0}, {"convenio": "GOV MG", "faixa": "acima20", "banco": "BANCO BMG", "prazo": 120, "tabela": "GOV MG NORMAL DIGITAL - 2,25% - 4960/4961", "condicao": "Padrão", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 6.3, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 6.0, "bonus_rec": 0.5, "adiant_rec": 0.8}, {"convenio": "GOV MG", "faixa": "acima20", "banco": "BANCO DAYCOVAL", "prazo": 120, "tabela": "DAYCOVAL - 761601 - SEPLAG 1 DIG", "condicao": "Padrão", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 5.75, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 6.0, "bonus_rec": 0.75, "adiant_rec": 0.0}, {"convenio": "GOV MG", "faixa": "acima20", "banco": "BANCO DIGIO S.A.", "prazo": 120, "tabela": "DIGIO - GOV MG SEPLAG - MARGEM LIVRE-120X-2,10-TKT 1700 - 12390", "condicao": "Contrato a partir de R$ 1.700,00", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 6.6, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 6.0, "bonus_rec": 1.6, "adiant_rec": 0.0}, {"convenio": "GOV MG", "faixa": "ate20", "banco": "AMIGOZ", "prazo": 120, "tabela": "GOV MINAS NORMAL - Empréstimo - 2,10%", "condicao": "Padrão", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 6.5, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 6.0, "bonus_rec": 2.0, "adiant_rec": 0.0}, {"convenio": "GOV MG", "faixa": "ate20", "banco": "BANCO BMG", "prazo": 120, "tabela": "GOV MG NORMAL DIGITAL - 2,25% - 4960/4961", "condicao": "Padrão", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 6.3, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 6.0, "bonus_rec": 0.5, "adiant_rec": 0.8}, {"convenio": "GOV MG", "faixa": "ate20", "banco": "BANCO DAYCOVAL", "prazo": 120, "tabela": "DAYCOVAL - 761601 - SEPLAG 1 DIG", "condicao": "Padrão", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 5.75, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 6.0, "bonus_rec": 0.75, "adiant_rec": 0.0}, {"convenio": "GOV MG", "faixa": "ate20", "banco": "BANCO DIGIO S.A.", "prazo": 120, "tabela": "DIGIO - GOV MG SEPLAG - MARGEM LIVRE-120X-2,10-TKT 1700 - 12390", "condicao": "Contrato a partir de R$ 1.700,00", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 6.6, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 6.0, "bonus_rec": 1.6, "adiant_rec": 0.0}, {"convenio": "GOV PR", "faixa": "acima20", "banco": "BANCO DAYCOVAL", "prazo": 120, "tabela": "DAYCOVAL - 931038 - GOV PR 1 - DIG - AOL", "condicao": "Padrão", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 5.0, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 6.0, "bonus_rec": 0.0, "adiant_rec": 0.0}, {"convenio": "GOV PR", "faixa": "acima20", "banco": "BANCO DIGIO S.A.", "prazo": 120, "tabela": "DIGIO - GOV PR - MARGEM LIVRE-72 A 120X-1,85-TKT 2500 - 12197", "condicao": "Contrato a partir de R$ 2.500,00", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 3.6, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 3.0, "bonus_rec": 1.6, "adiant_rec": 0.0}, {"convenio": "GOV PR", "faixa": "ate20", "banco": "BANCO DAYCOVAL", "prazo": 120, "tabela": "DAYCOVAL - 931038 - GOV PR 1 - DIG - AOL", "condicao": "Padrão", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 5.0, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 6.0, "bonus_rec": 0.0, "adiant_rec": 0.0}, {"convenio": "GOV PR", "faixa": "ate20", "banco": "BANCO DIGIO S.A.", "prazo": 120, "tabela": "DIGIO - GOV PR - MARGEM LIVRE-72 A 120X-1,85-TKT 2500 - 12197", "condicao": "Contrato a partir de R$ 2.500,00", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 3.6, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 3.0, "bonus_rec": 1.6, "adiant_rec": 0.0}, {"convenio": "GOV SP", "faixa": "acima20", "banco": "AMIGOZ", "prazo": 120, "tabela": "AMIGOZ - SPPREV FLEX 2 - Empréstimo - GOV. SÃO PAULO - SPPREV - 1,90%", "condicao": "Padrão", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 3.5, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 4.5, "bonus_rec": 7.0, "adiant_rec": 0.0}, {"convenio": "GOV SP", "faixa": "acima20", "banco": "BANCO BMG", "prazo": 96, "tabela": "BMG - EDUCAÇÃO SEFAZ - NORMAL DIGITAL - 9033/9159", "condicao": "Padrão", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 5.5, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 6.0, "bonus_rec": 0.5, "adiant_rec": 0.0}, {"convenio": "GOV SP", "faixa": "acima20", "banco": "BANCO DAYCOVAL", "prazo": 96, "tabela": "811100 - GOV SP - SEFAZ 1 AOL DIG", "condicao": "Padrão", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 8.0, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 6.0, "bonus_rec": 3.0, "adiant_rec": 0.0}, {"convenio": "GOV SP", "faixa": "acima20", "banco": "BANCO DIGIO S.A.", "prazo": 96, "tabela": "GOV SP SEFAZ SP - MARGEM LIVRE-72 A 96X-2,05-TKT 2000 - 12724", "condicao": "Contrato a partir de R$ 2.000,00", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 6.6, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 6.0, "bonus_rec": 1.6, "adiant_rec": 0.0}, {"convenio": "GOV SP", "faixa": "ate20", "banco": "AMIGOZ", "prazo": 120, "tabela": "AMIGOZ - SPPREV FLEX 2 - Empréstimo - GOV. SÃO PAULO - SPPREV - 1,90%", "condicao": "Padrão", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 3.5, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 4.5, "bonus_rec": 7.0, "adiant_rec": 0.0}, {"convenio": "GOV SP", "faixa": "ate20", "banco": "BANCO BMG", "prazo": 96, "tabela": "BMG - EDUCAÇÃO SEFAZ - NORMAL DIGITAL - 9033/9159", "condicao": "Padrão", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 5.5, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 6.0, "bonus_rec": 0.5, "adiant_rec": 0.0}, {"convenio": "GOV SP", "faixa": "ate20", "banco": "BANCO DAYCOVAL", "prazo": 96, "tabela": "811100 - GOV SP - SEFAZ 1 AOL DIG", "condicao": "Padrão", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 8.0, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 6.0, "bonus_rec": 3.0, "adiant_rec": 0.0}, {"convenio": "GOV SP", "faixa": "ate20", "banco": "BANCO DIGIO S.A.", "prazo": 96, "tabela": "GOV SP SEFAZ SP - MARGEM LIVRE-72 A 96X-2,05-TKT 2000 - 12724", "condicao": "Contrato a partir de R$ 2.000,00", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 6.6, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 6.0, "bonus_rec": 1.6, "adiant_rec": 0.0}, {"convenio": "INSS", "faixa": "acima20", "banco": "AGIL", "prazo": 108, "tabela": "TABELA AGIL INSS - COM CARÊNCIA", "condicao": "Contrato a partir de R$ 20.000,01", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 11.5, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 13.0, "bonus_rec": 0.0, "adiant_rec": 0.0}, {"convenio": "INSS", "faixa": "acima20", "banco": "BANCO BANRISUL", "prazo": 108, "tabela": "219N - NORMAL", "condicao": "Padrão", "fonte": "Storm", "base": "09/11/2026", "obs": "", "flat_rep": 5.0, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 6.0, "bonus_rec": 0.0, "adiant_rec": 0.0}, {"convenio": "INSS", "faixa": "acima20", "banco": "BANCO BMG", "prazo": 108, "tabela": "NSS NORMAL - 8902- 1,85% - CAR 90", "condicao": "Contrato a partir de R$ 6.000,01", "fonte": "Storm", "base": "09/11/2026", "obs": "", "flat_rep": 6.5, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 6.0, "bonus_rec": 1.5, "adiant_rec": 0.0}, {"convenio": "INSS", "faixa": "acima20", "banco": "BANCO C6 BANK", "prazo": 108, "tabela": "Tkt > 20k (+90d Car)-Plus-ML - 210439", "condicao": "Contrato a partir de R$ 20.000,01", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 9.45, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 6.0, "bonus_rec": 1.2, "adiant_rec": 3.25}, {"convenio": "INSS", "faixa": "acima20", "banco": "BANCO CREFISA", "prazo": 96, "tabela": "69077 - CB - INSS NOVO", "condicao": "Taxa 1,78% a 1,80%", "fonte": "Storm", "base": "09/11/2026", "obs": "", "flat_rep": 5.0, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 6.0, "bonus_rec": 0.0, "adiant_rec": 0.0}, {"convenio": "INSS", "faixa": "acima20", "banco": "BANCO DAYCOVAL", "prazo": 108, "tabela": "800998 - INSS DIG AOL 15K", "condicao": "Contrato a partir de R$ 15.000,00", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 6.5, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 6.0, "bonus_rec": 1.5, "adiant_rec": 0.0}, {"convenio": "INSS", "faixa": "acima20", "banco": "BANCO DIGIO S.A.", "prazo": 108, "tabela": "12045 - MARGEM LIVRE-108X-1,85-TKT 12000 - 30D", "condicao": "Contrato a partir de R$ 12.000,00", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 4.6, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 4.0, "bonus_rec": 1.6, "adiant_rec": 0.0}, {"convenio": "INSS", "faixa": "acima20", "banco": "BANCO HAPPY CONSIG", "prazo": 108, "tabela": "HAPPY - MARGEM LIVRE - 1,85%", "condicao": "Padrão", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 7.8, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 8.3, "bonus_rec": 0.5, "adiant_rec": 0.0}, {"convenio": "INSS", "faixa": "acima20", "banco": "BANCO INTER", "prazo": 108, "tabela": "NOVO - INSS - Tabela 6 - Com Seguro", "condicao": "Padrão", "fonte": "Storm", "base": "09/11/2026", "obs": "", "flat_rep": 1.0, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 2.0, "bonus_rec": 0.0, "adiant_rec": 0.0}, {"convenio": "INSS", "faixa": "acima20", "banco": "BANCO MERCANTIL DO BRASIL", "prazo": 108, "tabela": "MERCANTIL - INSS - NOVO", "condicao": "Padrão", "fonte": "Storm", "base": "09/11/2026", "obs": "", "flat_rep": 3.0, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 4.0, "bonus_rec": 0.0, "adiant_rec": 0.0}, {"convenio": "INSS", "faixa": "acima20", "banco": "BANCO NBC BANK", "prazo": 108, "tabela": "905-Novo ticket 20.000 a 65.000,00 C/ Carência 90d", "condicao": "Contrato de R$ 20.000,00 a R$ 65.000,00", "fonte": "Storm", "base": "09/11/2026", "obs": "", "flat_rep": 10.5, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 6.0, "bonus_rec": 7.5, "adiant_rec": 0.0}, {"convenio": "INSS", "faixa": "acima20", "banco": "BANCO PAN", "prazo": 108, "tabela": "INSS_NOV_NORMAL_A_ - 701434", "condicao": "Padrão", "fonte": "Storm", "base": "09/11/2026", "obs": "", "flat_rep": 3.0, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 4.0, "bonus_rec": 0.0, "adiant_rec": 0.0}, {"convenio": "INSS", "faixa": "acima20", "banco": "BANCO PARANÁ", "prazo": 108, "tabela": "INSS | NOVO - 33104 - PARCELA >R$ 400,00", "condicao": "Parcela acima de R$ 400", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 13.0, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 6.0, "bonus_rec": 8.0, "adiant_rec": 0.0}, {"convenio": "INSS", "faixa": "acima20", "banco": "BANCO PAULISTA", "prazo": 96, "tabela": "INSS NOVO - DIGITAL - Tabela 1065 - Taxa 1,85%", "condicao": "Padrão", "fonte": "Storm", "base": "09/11/2026", "obs": "", "flat_rep": 4.0, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 6.0, "bonus_rec": 0.0, "adiant_rec": 0.0}, {"convenio": "INSS", "faixa": "acima20", "banco": "BANCO QUERO MAIS CREDITO", "prazo": 108, "tabela": "800998 - INSS DIG AOL 15K", "condicao": "Contrato a partir de R$ 15.000,00", "fonte": "Storm", "base": "09/11/2026", "obs": "", "flat_rep": 6.5, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 6.0, "bonus_rec": 1.5, "adiant_rec": 0.0}, {"convenio": "INSS", "faixa": "acima20", "banco": "BANCO SANTANDER", "prazo": 96, "tabela": "INSS - Novo - Cód. 840020991", "condicao": "Padrão", "fonte": "Storm", "base": "09/11/2026", "obs": "", "flat_rep": 0.5, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 1.0, "bonus_rec": 0.0, "adiant_rec": 0.0}, {"convenio": "INSS", "faixa": "acima20", "banco": "BANCO VCTEX", "prazo": 108, "tabela": "Tabela INSS Exponencial - TX 1,85%", "condicao": "Padrão", "fonte": "Storm", "base": "09/11/2026", "obs": "", "flat_rep": 6.5, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 8.0, "bonus_rec": 0.0, "adiant_rec": 0.0}, {"convenio": "INSS", "faixa": "acima20", "banco": "BRB - CRÉDITO, FINANCIAMENTO E INVESTIMENTO", "prazo": 108, "tabela": "BRB - INSS - INSS MARGEM LIVRE - 1,85%", "condicao": "Padrão", "fonte": "Storm", "base": "09/11/2026", "obs": "", "flat_rep": 3.5, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 4.5, "bonus_rec": 0.0, "adiant_rec": 0.0}, {"convenio": "INSS", "faixa": "acima20", "banco": "BRB RED", "prazo": 108, "tabela": "BRB RED CONSIG - INSS - MARGEM LIVRE - TAXA 1,85% - 108X - SEM CARENCIA / CARENCIA ATE 90 DIAS", "condicao": "Padrão", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 4.0, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 5.0, "bonus_rec": 0.0, "adiant_rec": 0.0}, {"convenio": "INSS", "faixa": "acima20", "banco": "CONSIG 360 BRB", "prazo": 108, "tabela": "DIGA - NOVO - SEM SEGURO - ULTRA | 1,85-1,85", "condicao": "Contrato a partir de R$ 20.000,01", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 6.98, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 4.8, "bonus_rec": 0.0, "adiant_rec": 3.18}, {"convenio": "INSS", "faixa": "acima20", "banco": "DIGITUS", "prazo": 108, "tabela": "DIGITUS - MARGEM LIVRE (NOVO) - 1,85%", "condicao": "Contrato a partir de R$ 20.000,01", "fonte": "Storm", "base": "09/11/2026", "obs": "", "flat_rep": 5.78, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 6.0, "bonus_rec": 0.7, "adiant_rec": 0.0}, {"convenio": "INSS", "faixa": "acima20", "banco": "FACTA FINANCEIRA", "prazo": 108, "tabela": "71722 - SMART 3 - 90D - (Acima de R$ 20.000,01) - Todas as idades", "condicao": "Contrato a partir de R$ 20.000,01", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 8.5, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 6.0, "bonus_rec": 0.0, "adiant_rec": 3.5}, {"convenio": "INSS", "faixa": "acima20", "banco": "FOX DIGITAL", "prazo": 108, "tabela": "INSS NOVO ACIMA 20 MIL", "condicao": "Contrato a partir de R$ 20.000,00", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 6.0, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 7.0, "bonus_rec": 0.0, "adiant_rec": 0.0}, {"convenio": "INSS", "faixa": "acima20", "banco": "HELP", "prazo": 96, "tabela": "INSS NORMAL DIGITAL FRANQUIA", "condicao": "Padrão", "fonte": "Storm", "base": "09/11/2026", "obs": "", "flat_rep": 9.0, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 9.0, "bonus_rec": 0.0, "adiant_rec": 0.0}, {"convenio": "INSS", "faixa": "acima20", "banco": "HUB CRÉDITOS", "prazo": 108, "tabela": "HUB - INSS - Diga Novo - Ultra - Ultra - 1,85", "condicao": "Contrato de R$ 20.000,01 a R$ 150.000,00", "fonte": "Storm", "base": "09/11/2026", "obs": "", "flat_rep": 5.68, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 6.68, "bonus_rec": 0.0, "adiant_rec": 0.0}, {"convenio": "INSS", "faixa": "acima20", "banco": "ICRED FINANCEIRA", "prazo": 108, "tabela": "iCred - Normal +90DD - NOVO", "condicao": "Contrato de R$ 25.000,00 a R$ 100.000,00", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 8.7, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 6.0, "bonus_rec": 0.3, "adiant_rec": 3.5}, {"convenio": "INSS", "faixa": "acima20", "banco": "PRESENÇA BANK", "prazo": 108, "tabela": "PRESENÇA - INSS | Normal | Acima de 30.000,00 90D 108x - A - 12666", "condicao": "Contrato a partir de R$ 30.000,00", "fonte": "Storm", "base": "09/11/2026", "obs": "", "flat_rep": 12.5, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 13.5, "bonus_rec": 0.0, "adiant_rec": 0.0}, {"convenio": "INSS", "faixa": "acima20", "banco": "QUALIBANKING", "prazo": 108, "tabela": "QUALI - NOVO - INSS - 000637 NOVO CARÊNCIA 90D 108X 1,85%", "condicao": "Padrão", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 6.0, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 6.0, "bonus_rec": 1.0, "adiant_rec": 0.0}, {"convenio": "INSS", "faixa": "ate20", "banco": "AGIL", "prazo": 108, "tabela": "TABELA AGIL INSS - COM CARÊNCIA", "condicao": "Contrato de R$ 10.000,00 a R$ 19.999,00", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 10.98, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 12.48, "bonus_rec": 0.0, "adiant_rec": 0.0}, {"convenio": "INSS", "faixa": "ate20", "banco": "BANCO BANRISUL", "prazo": 108, "tabela": "219N - NORMAL", "condicao": "Padrão", "fonte": "Storm", "base": "09/11/2026", "obs": "", "flat_rep": 5.0, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 6.0, "bonus_rec": 0.0, "adiant_rec": 0.0}, {"convenio": "INSS", "faixa": "ate20", "banco": "BANCO BMG", "prazo": 108, "tabela": "NSS NORMAL - 8902- 1,85% - CAR 90", "condicao": "Contrato a partir de R$ 6.000,01", "fonte": "Storm", "base": "09/11/2026", "obs": "", "flat_rep": 6.5, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 6.0, "bonus_rec": 1.5, "adiant_rec": 0.0}, {"convenio": "INSS", "faixa": "ate20", "banco": "BANCO C6 BANK", "prazo": 108, "tabela": "Tkt 6k a 20k (+90d Car)-DWeb-ML - 210411", "condicao": "Contrato de R$ 6.000,00 a R$ 20.000,00", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 7.45, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 6.0, "bonus_rec": 1.2, "adiant_rec": 1.25}, {"convenio": "INSS", "faixa": "ate20", "banco": "BANCO CREFISA", "prazo": 96, "tabela": "69077 - CB - INSS NOVO", "condicao": "Taxa 1,78% a 1,80%", "fonte": "Storm", "base": "09/11/2026", "obs": "", "flat_rep": 5.0, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 6.0, "bonus_rec": 0.0, "adiant_rec": 0.0}, {"convenio": "INSS", "faixa": "ate20", "banco": "BANCO DAYCOVAL", "prazo": 108, "tabela": "800998 - INSS DIG AOL 15K", "condicao": "Contrato a partir de R$ 15.000,00", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 6.5, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 6.0, "bonus_rec": 1.5, "adiant_rec": 0.0}, {"convenio": "INSS", "faixa": "ate20", "banco": "BANCO DIGIO S.A.", "prazo": 108, "tabela": "12045 - MARGEM LIVRE-108X-1,85-TKT 12000 - 30D", "condicao": "Contrato a partir de R$ 12.000,00", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 4.6, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 4.0, "bonus_rec": 1.6, "adiant_rec": 0.0}, {"convenio": "INSS", "faixa": "ate20", "banco": "BANCO HAPPY CONSIG", "prazo": 108, "tabela": "HAPPY - MARGEM LIVRE - 1,85%", "condicao": "Padrão", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 7.8, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 8.3, "bonus_rec": 0.5, "adiant_rec": 0.0}, {"convenio": "INSS", "faixa": "ate20", "banco": "BANCO INTER", "prazo": 108, "tabela": "NOVO - INSS - Tabela 6 - Com Seguro", "condicao": "Padrão", "fonte": "Storm", "base": "09/11/2026", "obs": "", "flat_rep": 1.0, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 2.0, "bonus_rec": 0.0, "adiant_rec": 0.0}, {"convenio": "INSS", "faixa": "ate20", "banco": "BANCO MERCANTIL DO BRASIL", "prazo": 108, "tabela": "MERCANTIL - INSS - NOVO", "condicao": "Padrão", "fonte": "Storm", "base": "09/11/2026", "obs": "", "flat_rep": 3.0, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 4.0, "bonus_rec": 0.0, "adiant_rec": 0.0}, {"convenio": "INSS", "faixa": "ate20", "banco": "BANCO NBC BANK", "prazo": 108, "tabela": "910-Novo Ticket 3.000 a 19.999 C/ Carência", "condicao": "Contrato de R$ 3.000,00 a R$ 19.999,00", "fonte": "Storm", "base": "09/11/2026", "obs": "", "flat_rep": 10.0, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 6.0, "bonus_rec": 7.0, "adiant_rec": 0.0}, {"convenio": "INSS", "faixa": "ate20", "banco": "BANCO PAN", "prazo": 108, "tabela": "INSS_NOV_NORMAL_A_ - 701434", "condicao": "Padrão", "fonte": "Storm", "base": "09/11/2026", "obs": "", "flat_rep": 3.0, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 4.0, "bonus_rec": 0.0, "adiant_rec": 0.0}, {"convenio": "INSS", "faixa": "ate20", "banco": "BANCO PARANÁ", "prazo": 108, "tabela": "INSS | NOVO - 33104 - PARCELA R$ 60,00 a R$ 399,99", "condicao": "Parcela de R$ 60 a R$ 399,99", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 10.0, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 6.0, "bonus_rec": 5.0, "adiant_rec": 0.0}, {"convenio": "INSS", "faixa": "ate20", "banco": "BANCO PAULISTA", "prazo": 96, "tabela": "INSS NOVO - DIGITAL - Tabela 1065 - Taxa 1,85%", "condicao": "Padrão", "fonte": "Storm", "base": "09/11/2026", "obs": "", "flat_rep": 4.0, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 6.0, "bonus_rec": 0.0, "adiant_rec": 0.0}, {"convenio": "INSS", "faixa": "ate20", "banco": "BANCO QUERO MAIS CREDITO", "prazo": 108, "tabela": "800998 - INSS DIG AOL 15K", "condicao": "Contrato a partir de R$ 15.000,00", "fonte": "Storm", "base": "09/11/2026", "obs": "", "flat_rep": 6.5, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 6.0, "bonus_rec": 1.5, "adiant_rec": 0.0}, {"convenio": "INSS", "faixa": "ate20", "banco": "BANCO SANTANDER", "prazo": 96, "tabela": "INSS - Novo - Cód. 840020991", "condicao": "Padrão", "fonte": "Storm", "base": "09/11/2026", "obs": "", "flat_rep": 0.5, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 1.0, "bonus_rec": 0.0, "adiant_rec": 0.0}, {"convenio": "INSS", "faixa": "ate20", "banco": "BANCO VCTEX", "prazo": 108, "tabela": "Tabela INSS Exponencial - TX 1,85%", "condicao": "Padrão", "fonte": "Storm", "base": "09/11/2026", "obs": "", "flat_rep": 6.5, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 8.0, "bonus_rec": 0.0, "adiant_rec": 0.0}, {"convenio": "INSS", "faixa": "ate20", "banco": "BRB - CRÉDITO, FINANCIAMENTO E INVESTIMENTO", "prazo": 108, "tabela": "BRB - INSS - INSS MARGEM LIVRE - 1,85%", "condicao": "Padrão", "fonte": "Storm", "base": "09/11/2026", "obs": "", "flat_rep": 3.5, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 4.5, "bonus_rec": 0.0, "adiant_rec": 0.0}, {"convenio": "INSS", "faixa": "ate20", "banco": "BRB RED", "prazo": 108, "tabela": "BRB RED CONSIG - INSS - MARGEM LIVRE - TAXA 1,85% - 108X - SEM CARENCIA / CARENCIA ATE 90 DIAS", "condicao": "Padrão", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 4.0, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 5.0, "bonus_rec": 0.0, "adiant_rec": 0.0}, {"convenio": "INSS", "faixa": "ate20", "banco": "CONSIG 360 BRB", "prazo": 108, "tabela": "DIGA - NOVO - SEM SEGURO - ULTRA | 1,85-1,85", "condicao": "Contrato de R$ 1.000,01 a R$ 2.000,00", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 5.46, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 4.8, "bonus_rec": 0.0, "adiant_rec": 1.66}, {"convenio": "INSS", "faixa": "ate20", "banco": "DIGITUS", "prazo": 108, "tabela": "DIGITUS - MARGEM LIVRE (NOVO) - 1,85%", "condicao": "Contrato de R$ 1.000,00 a R$ 20.000,00", "fonte": "Storm", "base": "09/11/2026", "obs": "", "flat_rep": 5.38, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 5.6, "bonus_rec": 0.7, "adiant_rec": 0.0}, {"convenio": "INSS", "faixa": "ate20", "banco": "FACTA FINANCEIRA", "prazo": 108, "tabela": "71730 - SMART 2 - 90D - (De R$ 5.000,01 a R$ 20.000,00) - Todas as idades", "condicao": "Contrato de R$ 5.000,01 a R$ 20.000,00", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 6.0, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 6.0, "bonus_rec": 0.0, "adiant_rec": 1.0}, {"convenio": "INSS", "faixa": "ate20", "banco": "FOX DIGITAL", "prazo": 108, "tabela": "NOVO - INSS - FP - NORMAL - TX 1,85", "condicao": "Padrão", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 5.7, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 6.7, "bonus_rec": 0.0, "adiant_rec": 0.0}, {"convenio": "INSS", "faixa": "ate20", "banco": "HELP", "prazo": 96, "tabela": "INSS NORMAL DIGITAL FRANQUIA", "condicao": "Padrão", "fonte": "Storm", "base": "09/11/2026", "obs": "", "flat_rep": 9.0, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 9.0, "bonus_rec": 0.0, "adiant_rec": 0.0}, {"convenio": "INSS", "faixa": "ate20", "banco": "HUB CRÉDITOS", "prazo": 108, "tabela": "HUB - INSS - Semear Novo - Única - 1,85", "condicao": "Padrão", "fonte": "Storm", "base": "09/11/2026", "obs": "", "flat_rep": 4.62, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 5.62, "bonus_rec": 0.0, "adiant_rec": 0.0}, {"convenio": "INSS", "faixa": "ate20", "banco": "ICRED FINANCEIRA", "prazo": 108, "tabela": "iCred - Normal +90DD - NOVO", "condicao": "Contrato de R$ 1.200,00 a R$ 24.999,99", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 8.3, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 6.0, "bonus_rec": 0.5, "adiant_rec": 3.0}, {"convenio": "INSS", "faixa": "ate20", "banco": "PRESENÇA BANK", "prazo": 108, "tabela": "PRESENÇA - INSS | Normal | Até R$ 1.499,99 108x - A - 12651", "condicao": "Contrato até R$ 1.499,99", "fonte": "Storm", "base": "09/11/2026", "obs": "", "flat_rep": 12.3, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 13.3, "bonus_rec": 0.0, "adiant_rec": 0.0}, {"convenio": "INSS", "faixa": "ate20", "banco": "QUALIBANKING", "prazo": 108, "tabela": "QUALI - NOVO - INSS - 000637 NOVO CARÊNCIA 90D 108X 1,85%", "condicao": "Padrão", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 6.0, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 6.0, "bonus_rec": 1.0, "adiant_rec": 0.0}, {"convenio": "PM MG", "faixa": "acima20", "banco": "AMIGOZ", "prazo": 120, "tabela": "PMMG - Empréstimo - 2,10%", "condicao": "Padrão", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 8.5, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 6.0, "bonus_rec": 3.5, "adiant_rec": 0.0}, {"convenio": "PM MG", "faixa": "acima20", "banco": "BANCO DIGIO S.A.", "prazo": 120, "tabela": "DIGIO - GOV MG PMMG - MARGEM LIVRE-120X-2,10-TKT 1700 - 12404", "condicao": "Contrato a partir de R$ 1.700,00", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 6.6, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 6.0, "bonus_rec": 1.6, "adiant_rec": 0.0}, {"convenio": "PM MG", "faixa": "ate20", "banco": "AMIGOZ", "prazo": 120, "tabela": "PMMG - Empréstimo - 2,10%", "condicao": "Padrão", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 8.5, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 6.0, "bonus_rec": 3.5, "adiant_rec": 0.0}, {"convenio": "PM MG", "faixa": "ate20", "banco": "BANCO DIGIO S.A.", "prazo": 120, "tabela": "DIGIO - GOV MG PMMG - MARGEM LIVRE-120X-2,10-TKT 1700 - 12404", "condicao": "Contrato a partir de R$ 1.700,00", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 6.6, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 6.0, "bonus_rec": 1.6, "adiant_rec": 0.0}, {"convenio": "PM SP", "faixa": "acima20", "banco": "AMIGOZ", "prazo": 120, "tabela": "AMIGOZ - POLICIA MILITAR DO ESTADO DE SÃO PAULO - PMESP FLEX 1 - Empréstimo - 1,99%", "condicao": "Padrão", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 5.0, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 5.5, "bonus_rec": 0.5, "adiant_rec": 0.0}, {"convenio": "PM SP", "faixa": "acima20", "banco": "BANCO DIGIO S.A.", "prazo": 96, "tabela": "MARGEM LIVRE-72 A 96X-2,05-TKT 2000 - 12744", "condicao": "Contrato a partir de R$ 2.000,00", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 6.6, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 6.0, "bonus_rec": 1.6, "adiant_rec": 0.0}, {"convenio": "PM SP", "faixa": "ate20", "banco": "AMIGOZ", "prazo": 120, "tabela": "AMIGOZ - POLICIA MILITAR DO ESTADO DE SÃO PAULO - PMESP FLEX 1 - Empréstimo - 1,99%", "condicao": "Padrão", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 5.0, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 5.5, "bonus_rec": 0.5, "adiant_rec": 0.0}, {"convenio": "PM SP", "faixa": "ate20", "banco": "BANCO DIGIO S.A.", "prazo": 96, "tabela": "MARGEM LIVRE-72 A 96X-2,05-TKT 2000 - 12744", "condicao": "Contrato a partir de R$ 2.000,00", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 6.6, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 6.0, "bonus_rec": 1.6, "adiant_rec": 0.0}, {"convenio": "SIAPE", "faixa": "acima20", "banco": "BANCO C6 BANK", "prazo": 96, "tabela": "SIAPE ML Normal - Web - 410006/411006", "condicao": "Padrão", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 2.0, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 3.0, "bonus_rec": 0.0, "adiant_rec": 0.0}, {"convenio": "SIAPE", "faixa": "acima20", "banco": "BANCO DAYCOVAL", "prazo": 120, "tabela": "812146/812200 - MRG SIAPE DIG 1 AOL    ***", "condicao": "Padrão", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 2.5, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 3.5, "bonus_rec": 0.0, "adiant_rec": 0.0}, {"convenio": "SIAPE", "faixa": "acima20", "banco": "BANCO DIGIO S.A.", "prazo": 120, "tabela": "DIGIO - SIAPE - REFIN+MARGEM-48 A 120X-1,80-TKT 2500 - 121198", "condicao": "Contrato a partir de R$ 2.500,00", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 6.6, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 6.0, "bonus_rec": 1.6, "adiant_rec": 0.0}, {"convenio": "SIAPE", "faixa": "acima20", "banco": "BANCO DO BRASIL", "prazo": 120, "tabela": "Crédito Consignado – Convênio SIAPE - 1,80%", "condicao": "Padrão", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 2.21, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 3.21, "bonus_rec": 0.0, "adiant_rec": 0.0}, {"convenio": "SIAPE", "faixa": "acima20", "banco": "BANCO PAN", "prazo": 120, "tabela": "SIAPE_PENS_NOV_NORMAL_PLUS_3 - 610808", "condicao": "Contrato a partir de R$ 1.000,00 · Taxa 1,80%", "fonte": "PAN", "base": "12/11/2026", "obs": "", "flat_rep": null, "bonus_rep": null, "adiant_rep": null, "flat_rec": 4.5, "bonus_rec": 0.0, "adiant_rec": 0.0}, {"convenio": "SIAPE", "faixa": "acima20", "banco": "BANCO PARANÁ", "prazo": 120, "tabela": "SIAPE |NOVO |COM SEGURO |1,65 - 91909", "condicao": "Taxa 1,80%", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 10.5, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 6.0, "bonus_rec": 3.5, "adiant_rec": 2.0}, {"convenio": "SIAPE", "faixa": "acima20", "banco": "BRB RED", "prazo": 120, "tabela": "BRB RED CONSIG - SIAPE - MARGEM LIVRE - TAXA 1,80% - SEM CARENCIA / CARENCIA ATE 120 DIAS", "condicao": "Padrão", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 4.0, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 5.0, "bonus_rec": 0.0, "adiant_rec": 0.0}, {"convenio": "SIAPE", "faixa": "acima20", "banco": "FACTA FINANCEIRA", "prazo": 120, "tabela": "72249 - NOVO - 120D - Mínimo de R$5 mil", "condicao": "Contrato a partir de R$ 5.000,00", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 4.2, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 5.2, "bonus_rec": 0.0, "adiant_rec": 0.0}, {"convenio": "SIAPE", "faixa": "ate20", "banco": "BANCO C6 BANK", "prazo": 96, "tabela": "SIAPE ML Normal - Web - 410006/411006", "condicao": "Padrão", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 2.0, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 3.0, "bonus_rec": 0.0, "adiant_rec": 0.0}, {"convenio": "SIAPE", "faixa": "ate20", "banco": "BANCO DAYCOVAL", "prazo": 120, "tabela": "812146/812200 - MRG SIAPE DIG 1 AOL    ***", "condicao": "Padrão", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 2.5, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 3.5, "bonus_rec": 0.0, "adiant_rec": 0.0}, {"convenio": "SIAPE", "faixa": "ate20", "banco": "BANCO DIGIO S.A.", "prazo": 120, "tabela": "DIGIO - SIAPE - REFIN+MARGEM-48 A 120X-1,80-TKT 2500 - 121198", "condicao": "Contrato a partir de R$ 2.500,00", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 6.6, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 6.0, "bonus_rec": 1.6, "adiant_rec": 0.0}, {"convenio": "SIAPE", "faixa": "ate20", "banco": "BANCO DO BRASIL", "prazo": 120, "tabela": "Crédito Consignado – Convênio SIAPE - 1,80%", "condicao": "Padrão", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 2.21, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 3.21, "bonus_rec": 0.0, "adiant_rec": 0.0}, {"convenio": "SIAPE", "faixa": "ate20", "banco": "BANCO PAN", "prazo": 120, "tabela": "SIAPE_PENS_NOV_NORMAL_PLUS_3 - 610808", "condicao": "Contrato a partir de R$ 1.000,00 · Taxa 1,80%", "fonte": "PAN", "base": "12/11/2026", "obs": "", "flat_rep": null, "bonus_rep": null, "adiant_rep": null, "flat_rec": 4.5, "bonus_rec": 0.0, "adiant_rec": 0.0}, {"convenio": "SIAPE", "faixa": "ate20", "banco": "BANCO PARANÁ", "prazo": 120, "tabela": "SIAPE |NOVO |COM SEGURO |1,65 - 91909", "condicao": "Taxa 1,80%", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 10.5, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 6.0, "bonus_rec": 3.5, "adiant_rec": 2.0}, {"convenio": "SIAPE", "faixa": "ate20", "banco": "BRB RED", "prazo": 120, "tabela": "BRB RED CONSIG - SIAPE - MARGEM LIVRE - TAXA 1,80% - SEM CARENCIA / CARENCIA ATE 120 DIAS", "condicao": "Padrão", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 4.0, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 5.0, "bonus_rec": 0.0, "adiant_rec": 0.0}, {"convenio": "SIAPE", "faixa": "ate20", "banco": "FACTA FINANCEIRA", "prazo": 120, "tabela": "72249 - NOVO - 120D - Mínimo de R$5 mil", "condicao": "Contrato a partir de R$ 5.000,00", "fonte": "Storm", "base": "12/11/2026", "obs": "", "flat_rep": 4.2, "bonus_rep": 0.0, "adiant_rep": 0.0, "flat_rec": 5.2, "bonus_rec": 0.0, "adiant_rec": 0.0}];
+  window.dash = (() => {
+    const fontes = { ml: { status: 'ok', data: window.UN_DADOS } };
+    const calcs = {}, memo = {}, draws = {};
+    const api = {
+      calc(id, o) { calcs[id] = o; },
+      loader() {},
+      data(id) {
+        if (fontes[id]) return fontes[id];
+        if (calcs[id]) {
+          if (!memo[id]) memo[id] = { status: 'ok', data: calcs[id].fn(...calcs[id].inputs.map((i) => api.data(i).data)) };
+          return memo[id];
+        }
+        return { status: 'missing', data: [] };
+      },
+      draw(name, fn) {
+        if (fn) { draws[name] = fn; return; }
+        document.querySelectorAll('[data-draw="' + name + '"]').forEach((el) => draws[name] && draws[name](el));
+      },
+      drawAll() { Object.keys(draws).forEach((n) => api.draw(n)); },
+      onData(fn) { fn(); },
+      params() { return {}; }, setParams() {}, resetParams() {}, setLink() {}, refresh() {}
+    };
+    return api;
+  })();
+</script>
+
+
+<div class="un">
+  <header class="un-hero" id="topo">
+    <svg class="un-swoosh" viewBox="0 0 120 160" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M-40,-10 C30,30 92,62 92,104 C92,132 70,152 46,172 L-40,172 Z" fill="#D5030C"></path>
+      <path d="M-40,40 C-8,62 30,82 30,108 C30,128 10,146 -10,166 L-40,166 Z" fill="#fff"></path>
+    </svg>
+    <div class="un-hero-txt">
+      <span class="un-eyebrow">Setor Price · INSS, CLT, SIAPE, Governos e PM</span>
+      <h1>Comparativo de comissão por banco</h1>
+      <p>Margem Livre (Novo) por ticket · INSS sem tabelas de Aumento · só tabelas ativas · prazo máximo de cada banco</p>
+      <span class="un-atual">Última atualização: <time datetime="2026-11-12">12/11/2026</time></span>
+    </div>
+    <img class="un-logo" alt="Única Promotora" src="data:image/png;base64,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">
+  </header>
+
+  <nav class="un-conv" id="convenio" aria-label="Convênio">
+    <div class="un-ctl">
+    <span class="un-conv-l">Convênio</span>
+    <select class="dash-select un-conv-sel" id="un-conv" aria-label="Convênio">
+      <option value="INSS" selected>INSS</option>
+      <option value="CLT">CLT (Crédito do Trabalhador)</option>
+      <option value="SIAPE">Federal (SIAPE)</option>
+      <option value="GOV SP">Governo SP</option>
+      <option value="GOV MG">Governo MG</option>
+      <option value="GOV PR">Governo PR</option>
+      <option value="PM SP">Polícia Militar SP</option>
+      <option value="PM MG">Polícia Militar MG</option>
+    </select>
+    </div>
+    <div class="un-ctl">
+    <span class="un-conv-l">Ticket</span>
+    <div class="un-seg" role="group" aria-label="Ticket">
+      <button type="button" data-faixa="acima20" aria-pressed="true">Acima de R$ 20 mil</button>
+      <button type="button" data-faixa="ate20" aria-pressed="false">Até R$ 20 mil</button>
+    </div>
+    </div>
+    <div class="un-ctl">
+    <span class="un-conv-l">Bancos</span>
+    <details class="un-pick" id="selecao-bancos">
+      <summary><span data-draw="selnome" data-source="ranking">Todos os bancos</span></summary>
+      <div class="un-pick-panel">
+        <input type="search" class="un-busca" id="un-busca-banco" placeholder="Buscar banco" aria-label="Buscar banco" autocomplete="off">
+        <div class="un-pick-acts">
+          <button type="button" data-acao="todos">Marcar todos os listados</button>
+          <button type="button" data-acao="limpar">Limpar seleção</button>
+        </div>
+        <div class="un-pick-list" data-draw="bancos" data-source="ranking" role="group" aria-label="Bancos para comparar"></div>
+      </div>
+    </details>
+    </div>
+  </nav>
+  <div class="un-chips vazio" data-draw="chips" data-source="ranking" aria-label="Bancos em comparação"></div>
+
+  <p class="un-take" id="resumo">
+    A 1ª opção é <b data-draw="txt" data-source="ranking" data-field="banco" data-n="1">—</b>,
+    com <b data-draw="txt" data-source="ranking" data-field="rec_total" data-n="1">—</b>% de comissão.
+    <span data-draw="seguintes" data-source="ranking"></span>
+  </p>
+
+  <section class="un-kpis" id="indicadores" aria-label="Indicadores">
+    <div class="un-kpi">
+      <span class="un-kpi-l">Bancos com tabela ativa no convênio e ticket</span>
+      <span class="un-kpi-v"><span data-draw="kpi" data-source="resumo" data-field="bancos">—</span></span>
+      <span class="un-kpi-n" data-draw="kpi" data-source="resumo" data-field="sem_repasse_txt">—</span>
+    </div>
+    <div class="un-kpi k2">
+      <span class="un-kpi-l">Maior spread (recebido − repasse)</span>
+      <span class="un-kpi-v"><span data-draw="kpi" data-source="resumo" data-field="maior_spread">—</span><span class="u">p.p.</span></span>
+      <span class="un-kpi-n" data-draw="kpi" data-source="resumo" data-field="maior_spread_banco">—</span>
+    </div>
+    <div class="un-kpi warn">
+      <span class="un-kpi-l">Bancos com spread zero ou negativo</span>
+      <span class="un-kpi-v"><span data-draw="kpi" data-source="resumo" data-field="spread_zero">—</span></span>
+      <span class="un-kpi-n" data-draw="kpi" data-source="resumo" data-field="spread_zero_bancos">—</span>
+    </div>
+  </section>
+
+  <section id="opcoes" style="display:grid;gap:var(--cds-gap-md)">
+    <div>
+      <h2>Comparativo por ticket · 1ª, 2ª e 3ª opção</h2>
+      <p class="un-sub">Lado a lado, as três maiores comissões que recebemos do banco (Flat + Bônus + Adiantamento) em cada faixa de ticket, no convênio escolhido e entre os bancos selecionados. Cada banco entra com a sua melhor tabela ativa de Margem Livre (Novo) no maior prazo que oferece.</p>
+    </div>
+    <div class="un-quadros">
+      <div class="un-quadro q-alto" id="quadro-acima-20-mil">
+        <div class="un-quadro-h"><span>Ticket acima de R$ 20 mil</span></div>
+        <div class="un-quadro-b" data-draw="quadro" data-faixa="acima20" data-source="ranking"></div>
+      </div>
+      <div class="un-quadro q-baixo" id="quadro-ate-20-mil">
+        <div class="un-quadro-h"><span>Ticket até R$ 20 mil</span></div>
+        <div class="un-quadro-b" data-draw="quadro" data-faixa="ate20" data-source="ranking"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="un-card" id="tabela">
+    <div class="un-bar">
+      <div>
+        <h2>Ranking completo</h2>
+        <p class="un-sub">Valores em % sobre a operação; spread em pontos percentuais. Ordem pelo valor que recebemos do banco na faixa de ticket escolhida; a posição é a do convênio inteiro. Repasse e spread aparecem como referência (Soma, PAN e Handmais não têm repasse cadastrado).</p>
+      </div>
+    </div>
+    <div class="un-tw">
+      <table class="un-table" data-source="ranking" data-row-key="convenio,faixa,banco">
+        <thead>
+          <tr>
+            <th data-field="pos_rec" class="n">Posição</th>
+            <th data-field="banco">Banco</th>
+            <th data-field="prazo" class="n">Prazo</th>
+            <th data-field="tabela">Tabela</th>
+            <th data-field="condicao">Condição</th>
+            <th data-field="rec_total" class="n g-rec">Recebido do banco</th>
+            <th data-field="flat_rec" class="n g-rec">Flat rec.</th>
+            <th data-field="bonus_rec" class="n g-rec">Bônus rec.</th>
+            <th data-field="adiant_rec" class="n g-rec">Adiant. rec.</th>
+            <th data-field="rep_total" class="n g-rep">Repasse total</th>
+            <th data-field="flat_rep" class="n g-rep">Flat rep.</th>
+            <th data-field="adiant_rep" class="n g-rep">Adiant. rep.</th>
+            <th data-field="spread" class="n">Spread</th>
+            <th data-field="base" class="n">Base</th>
+          </tr>
+        </thead>
+        <tbody data-draw="tabela"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="un-card" id="grafico">
+    <div>
+      <h2>Top 10 bancos</h2>
+      <p class="un-sub">Os 10 primeiros pelo valor que recebemos do banco, na faixa de ticket escolhida, entre os bancos selecionados (ou do convênio inteiro). Em vermelho, a 1ª, 2ª e 3ª opção.</p>
+    </div>
+    <div class="un-chart" data-draw="grafico" data-source="ranking"></div>
+  </section>
+
+  <details class="un-notes" id="como-foi-montado">
+    <summary>Como o comparativo foi montado</summary>
+    <ul>
+      <li>Fonte: planilha Tabelas Unificadas INSS, CLT e SIAPE de 12/11/2026 (Storm, Soma, PAN e Handmais) e export de Prazos do Storm de 12/11/2026 para Governo SP, Governo MG, Governo PR, Polícia Militar SP e Polícia Militar MG. Os bancos de INSS que não estão nessa planilha seguem com o export do Storm de 09/11/2026; a coluna Base mostra a data de cada um.</li>
+      <li>Só tabelas ativas da operação Margem Livre (Novo). No INSS, as tabelas de Aumento (Empréstimo Complementar e tabelas com "Aumento" no nome) ficaram de fora.</li>
+      <li>Prazo máximo: cada banco entra com o maior prazo em que tem tabela ativa e, nesse prazo, com a tabela de maior repasse (ou de maior recebido, quando não há repasse cadastrado).</li>
+      <li>O ranking é um só, pela comissão total que recebemos do banco. Repasse ao parceiro e spread ficam como colunas de referência.</li>
+      <li>Ticket: cada tabela entra na faixa acima de R$ 20 mil ou até R$ 20 mil pelo valor de contrato da regra (Storm, Soma, PAN) ou pelo que o nome da tabela indica ("Tkt > 20k", "Acima de 30.000,00", "Ticket 3.000 a 19.999"). Tabela sem faixa vale para as duas. "AOL 15K", "TKT 12000" e "Mínimo de R$ 5 mil" foram lidos como valor mínimo de contrato.</li>
+      <li>Banco Paraná (INSS) separa por parcela: a tabela de parcela acima de R$ 400 entra em acima de R$ 20 mil e a de R$ 60 a R$ 399,99 em até R$ 20 mil (em 108x a 1,85%, parcela de R$ 400 ≈ R$ 18,5 mil de contrato).</li>
+      <li>Recebido total = Flat + Bônus + Adiantamento recebidos. Repasse total = Flat + Bônus + Adiantamento repassados.</li>
+      <li>Soma, PAN e Handmais trazem só o que o banco paga; por isso não têm repasse nem spread. A tabela da Política Pricing de SIAPE ficou de fora até o banco ser confirmado.</li>
+      <li>Empate: desempata pelo outro critério e, persistindo, pela ordem alfabética do banco. A coluna Condição mostra quando a comissão vale só para uma faixa de valor de contrato ou de taxa.</li>
+    </ul>
+  </details>
+  <p class="un-foot">Fonte: Tabelas Unificadas INSS, CLT e SIAPE e Prazos do Storm de 12/11/2026 (Governos e PM); bancos de INSS fora da planilha com export do Storm de 09/11/2026 · Setor Price · Única Promotora</p>
+</div>
+
+<script>
+  dash.calc('ranking', {
+    title: 'Comparativo com totais e posições por convênio',
+    description: 'Soma os componentes de cada banco e numera, dentro de cada convênio e faixa de ticket, pelo recebido total (e pelo repasse total, como referência).',
+    inputs: ['ml'],
+    fn: (bancos) => {
+      const r2 = (v) => Math.round(v * 100) / 100;
+      const temRep = (b) => b.flat_rep !== null && b.flat_rep !== undefined && b.flat_rep !== '';
+      const rows = bancos.map((b) => {
+        const rec_total = r2(Number(b.flat_rec || 0) + Number(b.bonus_rec || 0) + Number(b.adiant_rec || 0));
+        const rep_total = temRep(b) ? r2(Number(b.flat_rep) + Number(b.bonus_rep || 0) + Number(b.adiant_rep || 0)) : null;
+        return { ...b, rec_total, rep_total, spread: rep_total === null ? null : r2(rec_total - rep_total), pos_rep: null, pos_rec: null };
+      });
+      const grupos = [...new Set(rows.map((x) => x.convenio + '|' + x.faixa))];
+      grupos.forEach((c) => {
+        const g = rows.filter((x) => x.convenio + '|' + x.faixa === c);
+        [...g].sort((a, b) => b.rec_total - a.rec_total || (b.rep_total ?? -1) - (a.rep_total ?? -1) || a.banco.localeCompare(b.banco))
+          .forEach((x, i) => { x.pos_rec = i + 1; });
+        g.filter((x) => x.rep_total !== null)
+          .sort((a, b) => b.rep_total - a.rep_total || b.rec_total - a.rec_total || a.banco.localeCompare(b.banco))
+          .forEach((x, i) => { x.pos_rep = i + 1; });
+      });
+      return rows.sort((a, b) => a.convenio.localeCompare(b.convenio) || a.faixa.localeCompare(b.faixa) || a.pos_rec - b.pos_rec);
+    }
+  });
+
+  dash.calc('resumo', {
+    title: 'Indicadores por convênio',
+    description: 'Por convênio e faixa de ticket: quantidade de bancos, bancos sem repasse cadastrado, maior spread e bancos com spread zero ou negativo.',
+    inputs: ['ranking'],
+    fn: (ranking) => {
+      const grupos = [...new Set(ranking.map((x) => x.convenio + '|' + x.faixa))];
+      return grupos.map((k) => {
+        const g = ranking.filter((x) => x.convenio + '|' + x.faixa === k);
+        const [c, fx] = k.split('|');
+        const comRep = g.filter((x) => x.spread !== null);
+        const semRep = g.length - comRep.length;
+        const maior = comRep.length ? Math.max(...comRep.map((x) => x.spread)) : null;
+        const baixos = comRep.filter((x) => x.spread <= 0);
+        return {
+          convenio: c,
+          faixa: fx,
+          bancos: g.length,
+          sem_repasse: semRep,
+          sem_repasse_txt: semRep ? semRep + (semRep === 1 ? ' sem repasse cadastrado' : ' sem repasse cadastrado') : 'Todos com repasse cadastrado',
+          maior_spread: maior,
+          maior_spread_banco: maior === null ? '—' : comRep.filter((x) => x.spread === maior).map((x) => x.banco).join(', '),
+          spread_zero: baixos.length,
+          spread_zero_bancos: baixos.length ? baixos.map((x) => x.banco).join(', ') : 'Nenhum banco'
+        };
+      });
+    }
+  });
+
+  window.unFmt = (v) => (v === null || v === undefined ? '—' : Number(v).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+  window.unNome = (s) => { const t = String(s).replace(/^BANCO /, '').replace(' - CRÉDITO, FINANCIAMENTO E INVESTIMENTO', ''); return t.length > 24 ? t.slice(0, 23) + '…' : t; };
+  window.unEnc = (v) => encodeURIComponent(String(v));
+  window.unOrdem = 'rec';
+  window.unConv = 'INSS';
+  window.unFaixa = 'acima20';
+  window.unNoFiltro = (r) => r.convenio === window.unConv && r.faixa === window.unFaixa;
+  window.unSel = {};
+  window.unBusca = '';
+  window.unNorm = (s) => String(s).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  window.unSelAtiva = () => (window.unSel[window.unConv] = window.unSel[window.unConv] || new Set());
+  window.unNaSel = (r) => { const s = window.unSelAtiva(); return s.size === 0 || s.has(r.banco); };
+  window.unRows = () => {
+    const d = dash.data('ranking');
+    if (d.status !== 'ok' || !Array.isArray(d.data)) return null;
+    const k = window.unOrdem === 'rec' ? 'pos_rec' : 'pos_rep';
+    return d.data.filter((r) => window.unNoFiltro(r) && window.unNaSel(r))
+      .sort((a, b) => (a[k] ?? 9999) - (b[k] ?? 9999) || a.pos_rec - b.pos_rec);
+  };
+</script>
+
+<script>
+  const unTodos = () => { ['txt', 'seguintes', 'kpi', 'quadro', 'tabela', 'grafico', 'bancos', 'selnome', 'chips'].forEach((n) => dash.draw(n)); };
+  window.unTodos = unTodos;
+  document.querySelectorAll('.un-pick-acts button').forEach((b) => {
+    b.addEventListener('click', () => {
+      const s = window.unSelAtiva();
+      if (b.dataset.acao === 'limpar') s.clear();
+      else {
+        const d = dash.data('ranking');
+        const q = window.unNorm(window.unBusca.trim());
+        if (!q) s.clear();
+        if (d.status === 'ok') d.data.filter((r) => window.unNoFiltro(r) && (!q || window.unNorm(r.banco).includes(q))).forEach((r) => s.add(r.banco));
+      }
+      unTodos();
+    });
+  });
+  document.querySelectorAll('#un-busca-banco').forEach((inp) => {
+    inp.addEventListener('input', () => { window.unBusca = inp.value; dash.draw('bancos'); });
+    inp.addEventListener('keydown', (ev) => { if (ev.key === 'Escape') { inp.value = ''; window.unBusca = ''; dash.draw('bancos'); } });
+  });
+  document.querySelectorAll('.un-pick').forEach((p) => {
+    p.addEventListener('toggle', () => { if (p.open) p.querySelectorAll('#un-busca-banco').forEach((inp) => inp.focus()); });
+  });
+  document.addEventListener('click', (ev) => {
+    document.querySelectorAll('.un-pick[open]').forEach((p) => { if (!p.contains(ev.target)) p.removeAttribute('open'); });
+  });
+  document.querySelectorAll('#un-ordem').forEach((sel) => {
+    sel.addEventListener('change', () => {
+      window.unOrdem = sel.value === 'rec' ? 'rec' : 'rep';
+      dash.draw('grafico'); dash.draw('tabela');
+    });
+  });
+  document.querySelectorAll('#un-conv').forEach((sel) => {
+    sel.addEventListener('change', () => { window.unConv = sel.value; unTodos(); });
+  });
+  document.querySelectorAll('.un-seg button[data-faixa]').forEach((b) => {
+    b.addEventListener('click', () => {
+      window.unFaixa = b.dataset.faixa;
+      document.querySelectorAll('.un-seg button[data-faixa]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+      unTodos();
+    });
+  });
+</script>
+
+<script>
+  dash.draw('txt', (el) => {
+    const d = dash.data('ranking');
+    if (d.status !== 'ok') { el.textContent = '—'; return; }
+    const n = Number(el.dataset.n || 1);
+    const row = d.data.filter((x) => window.unNoFiltro(x) && window.unNaSel(x))
+      .sort((a, b) => a.pos_rec - b.pos_rec)[n - 1];
+    if (!row) { el.textContent = '—'; return; }
+    el.dataset.where = 'convenio=' + window.unEnc(row.convenio) + '&faixa=' + window.unEnc(row.faixa) + '&banco=' + window.unEnc(row.banco);
+    const f = el.dataset.field;
+    el.textContent = f === 'banco' ? row.banco : window.unFmt(row[f]);
+  });
+
+  dash.draw('seguintes', (el) => {
+    el.replaceChildren();
+    const d = dash.data('ranking');
+    if (d.status !== 'ok') return;
+    const rows = d.data.filter((x) => window.unNoFiltro(x) && window.unNaSel(x)).sort((a, b) => a.pos_rec - b.pos_rec).slice(1, 3);
+    if (!rows.length) return;
+    const where = (r) => 'convenio=' + window.unEnc(r.convenio) + '&faixa=' + window.unEnc(r.faixa) + '&banco=' + window.unEnc(r.banco);
+    const item = (r) => {
+      const b = document.createElement('b'); b.textContent = r.banco; b.dataset.source = 'ranking'; b.dataset.field = 'banco'; b.dataset.where = where(r);
+      const v = document.createElement('span'); v.textContent = window.unFmt(r.rec_total); v.dataset.source = 'ranking'; v.dataset.field = 'rec_total'; v.dataset.where = where(r);
+      return [b, ' (', v, '%)'];
+    };
+    el.append(rows.length === 1 ? 'Em seguida vem ' : 'Em seguida vêm ', ...item(rows[0]));
+    if (rows[1]) el.append(' e ', ...item(rows[1]));
+    el.append('.');
+  });
+
+  dash.draw('kpi', (el) => {
+    const d = dash.data('resumo');
+    const row = d.status === 'ok' && Array.isArray(d.data) ? d.data.find((x) => x.convenio === window.unConv && x.faixa === window.unFaixa) : null;
+    if (!row) { el.textContent = '—'; return; }
+    el.dataset.where = 'convenio=' + window.unEnc(row.convenio) + '&faixa=' + window.unEnc(row.faixa);
+    const v = row[el.dataset.field];
+    el.textContent = el.dataset.field === 'maior_spread' ? window.unFmt(v) : String(v);
+  });
+
+  dash.draw('quadro', (el) => {
+    const d = dash.data('ranking');
+    el.replaceChildren();
+    if (d.status !== 'ok') { el.textContent = d.status === 'error' ? 'Falha ao carregar' : '—'; return; }
+    const fx = el.dataset.faixa;
+    const filtrando = window.unSelAtiva().size > 0;
+    const rows = d.data.filter((x) => x.convenio === window.unConv && x.faixa === fx && window.unNaSel(x)).sort((a, b) => a.pos_rec - b.pos_rec).slice(0, 3);
+    const mk = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; };
+    const mark = (e, field, row) => { e.dataset.source = 'ranking'; e.dataset.field = field; e.dataset.where = 'convenio=' + window.unEnc(row.convenio) + '&faixa=' + window.unEnc(row.faixa) + '&banco=' + window.unEnc(row.banco); return e; };
+    if (!rows.length) { el.append(mk('div', 'un-qvazio', filtrando ? 'Nenhum banco selecionado tem tabela nesta faixa.' : 'Nenhum banco com tabela nesta faixa.')); return; }
+    rows.forEach((r, i) => {
+      const row = mk('div', 'un-qrow r' + (i + 1));
+      row.append(mk('div', 'un-badge', (i + 1) + 'ª'));
+      const b = mk('div', 'un-op-b');
+      b.append(mark(mk('span', 'nm', r.banco), 'banco', r));
+      b.append(mk('span', 'dt', r.prazo + 'x · ' + r.tabela + (r.condicao && r.condicao !== 'Padrão' ? ' · ' + r.condicao : '')));
+      const c = mk('span', 'dt');
+      c.append('Flat ', mark(mk('span', '', window.unFmt(r.flat_rec)), 'flat_rec', r), ' · Bônus ', mark(mk('span', '', window.unFmt(r.bonus_rec)), 'bonus_rec', r),
+               ' · Adiant. ', mark(mk('span', '', window.unFmt(r.adiant_rec)), 'adiant_rec', r));
+      if (filtrando) c.append(' · ' + r.pos_rec + 'ª no convênio');
+      b.append(c);
+      row.append(b);
+      const v = mk('div', 'vl');
+      const big = mark(mk('b', '', window.unFmt(r.rec_total)), 'rec_total', r); big.append('%'); v.append(big);
+      const sm = mk('span');
+      if (r.rep_total === null) sm.append('repasse não cadastrado');
+      else sm.append('repasse ', mark(mk('span', '', window.unFmt(r.rep_total)), 'rep_total', r), '% · spread ', mark(mk('span', '', window.unFmt(r.spread)), 'spread', r));
+      v.append(sm);
+      row.append(v);
+      el.append(row);
+    });
+  });
+
+  dash.draw('grafico', (el) => {
+    const all = window.unRows();
+    el.replaceChildren();
+    const st = dash.data('ranking').status;
+    if (!all) { el.textContent = st === 'error' ? 'Falha ao carregar' : '—'; return; }
+    const porRec = window.unOrdem === 'rec';
+    const campo = porRec ? 'rec_total' : 'rep_total';
+    const posK = porRec ? 'pos_rec' : 'pos_rep';
+    const rows = all.filter((r) => r[posK] !== null).slice(0, 10);
+    if (!rows.length) { const p = document.createElement('p'); p.className = 'un-sub'; p.textContent = window.unSelAtiva().size ? 'Nenhum banco selecionado com repasse cadastrado.' : 'Nenhum banco com repasse cadastrado neste convênio.'; el.append(p); return; }
+    const W = Math.max(300, el.clientWidth || 600);
+    const narrow = W < 560;
+    const rowH = 36, bh = 22, top = 4, bottom = 4;
+    const H = top + rows.length * rowH + bottom;
+    const svg = d3.select(el).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img')
+      .attr('aria-label', 'Top 10 bancos de Margem Livre (Novo) ' + window.unConv + ' por ' + (porRec ? 'recebido do banco' : 'repasse ao parceiro'));
+    const lab = svg.append('g');
+    const labels = lab.selectAll('text').data(rows).join('text')
+      .attr('x', 0).attr('y', (d, i) => top + i * rowH + rowH / 2).attr('dy', '0.35em')
+      .style('font-size', 'var(--cds-font-size-body)').style('fill', 'var(--color-fg)')
+      .style('font-weight', (d, i) => (i < 3 ? 700 : 400))
+      .text((d) => d[posK] + 'ª  ' + window.unNome(d.banco));
+    let lw = 0; labels.each(function () { lw = Math.max(lw, this.getComputedTextLength()); });
+    lw = Math.min(lw || 150, narrow ? 130 : 230);
+    labels.each(function () {
+      const t = d3.select(this); let s = t.text();
+      while (this.getComputedTextLength() > lw && s.length > 4) { s = s.slice(0, -2) + '…'; t.text(s); }
+    });
+    const left = lw + 14, endW = narrow ? 58 : 72;
+    const max = d3.max(rows, (d) => d[campo]) || 1;
+    const x = d3.scaleLinear().domain([0, max]).range([left, W - endW]);
+    const row = svg.append('g').selectAll('g').data(rows).join('g').attr('transform', (d, i) => `translate(0,${top + i * rowH})`);
+    row.append('rect').attr('x', left).attr('y', (rowH - bh) / 2).attr('height', bh)
+      .attr('width', (d) => Math.max(1, x(d[campo]) - left)).attr('rx', 3)
+      .style('fill', (d, i) => (i < 3 ? 'var(--un-red)' : 'var(--un-ink-bar)'));
+    row.append('text').attr('x', (d) => x(d[campo]) + 8).attr('y', rowH / 2).attr('dy', '0.35em')
+      .style('font-size', 'var(--cds-font-size-body)').style('font-weight', 700).style('fill', 'var(--color-fg)')
+      .style('font-variant-numeric', 'tabular-nums').text((d) => window.unFmt(d[campo]) + '%');
+    const tip = d3.select(el).append('div').attr('class', 'un-tip').style('opacity', 0);
+    row.append('rect').attr('x', 0).attr('width', W).attr('height', rowH).style('fill', 'transparent')
+      .on('pointermove', (ev, d) => {
+        const t = tip.node(); t.replaceChildren();
+        const s = document.createElement('strong'); s.textContent = d.banco; t.append(s);
+        const line = (txt, cls) => { const e = document.createElement('div'); if (cls) e.className = cls; e.textContent = txt; t.append(e); };
+        line(d.prazo + 'x · ' + d.tabela, 'm');
+        if (d.condicao && d.condicao !== 'Padrão') line(d.condicao, 'm');
+        line('Repasse: ' + (d.rep_total === null ? 'não cadastrado' : window.unFmt(d.rep_total) + '%') + ' · Recebido: ' + window.unFmt(d.rec_total) + '%');
+        if (d.spread !== null) line('Spread: ' + window.unFmt(d.spread) + ' p.p.');
+        const r = el.getBoundingClientRect();
+        const px = ev.clientX - r.left, py = ev.clientY - r.top;
+        const w = t.offsetWidth || 260, h = t.offsetHeight || 90;
+        tip.style('left', Math.max(0, Math.min(px + 14, el.clientWidth - w)) + 'px')
+           .style('top', Math.max(0, py - h - 12) + 'px').style('opacity', 1);
+      })
+      .on('pointerleave', () => tip.style('opacity', 0));
+  });
+
+  dash.draw('bancos', (el) => {
+    const d = dash.data('ranking');
+    const rolagem = el.scrollTop;
+    el.replaceChildren();
+    if (d.status !== 'ok') { el.textContent = '—'; return; }
+    const s = window.unSelAtiva();
+    const q = window.unNorm(window.unBusca.trim());
+    const lista = d.data.filter((r) => window.unNoFiltro(r) && (!q || window.unNorm(r.banco).includes(q)));
+    if (!lista.length) { const v = document.createElement('div'); v.className = 'un-pick-vazio'; v.textContent = 'Nenhum banco encontrado.'; el.append(v); }
+    lista.sort((a, b) => a.banco.localeCompare(b.banco)).forEach((r, i) => {
+      const lab = document.createElement('label');
+      const cb = document.createElement('input'); cb.type = 'checkbox'; cb.id = 'un-b-' + i; cb.checked = s.has(r.banco);
+      cb.onchange = () => { if (cb.checked) s.add(r.banco); else s.delete(r.banco); window.unTodos(); };
+      const nm = document.createElement('span'); nm.textContent = r.banco;
+      const p = document.createElement('span'); p.className = 'p';
+      p.textContent = window.unFmt(r.rec_total) + '%';
+      lab.append(cb, nm, p); el.append(lab);
+    });
+    el.scrollTop = rolagem;
+  });
+
+  dash.draw('selnome', (el) => {
+    const d = dash.data('ranking');
+    if (d.status !== 'ok') { el.textContent = 'Todos os bancos'; return; }
+    const n = d.data.filter((r) => window.unNoFiltro(r)).length;
+    const k = window.unSelAtiva().size;
+    el.textContent = k === 0 || k === n ? 'Todos os bancos (' + n + ')' : k + (k === 1 ? ' banco selecionado' : ' bancos selecionados');
+  });
+
+  dash.draw('chips', (el) => {
+    el.replaceChildren();
+    const s = window.unSelAtiva();
+    const d = dash.data('ranking');
+    if (d.status !== 'ok' || s.size === 0) { el.classList.add('vazio'); return; }
+    const n = d.data.filter((r) => window.unNoFiltro(r)).length;
+    if (s.size === n) { el.classList.add('vazio'); return; }
+    el.classList.remove('vazio');
+    const t = document.createElement('span'); t.className = 'un-conv-l'; t.textContent = 'Comparando'; el.append(t);
+    [...s].sort().forEach((b) => { const c = document.createElement('span'); c.className = 'un-chip'; c.textContent = b; el.append(c); });
+  });
+
+  dash.draw('tabela', (el) => {
+    const rows = window.unRows();
+    el.replaceChildren();
+    if (!rows) return;
+    const posK = window.unOrdem === 'rec' ? 'pos_rec' : 'pos_rep';
+    rows.forEach((r) => {
+      const tr = document.createElement('tr');
+      tr.dataset.key = window.unEnc(r.convenio) + ',' + window.unEnc(r.faixa) + ',' + window.unEnc(r.banco);
+      if (r[posK] !== null && r[posK] <= 3) tr.className = 'top';
+      const pos = (v) => (v === null ? '—' : v + 'ª');
+      const cells = [
+        [pos(r.pos_rec), 'pos'], [r.banco, 'tot'], [r.prazo + 'x', 'n'], [r.tabela, 'tab'], [r.condicao, 'cond'],
+        [window.unFmt(r.rec_total), 'n tot rec'], [window.unFmt(r.flat_rec), 'n'], [window.unFmt(r.bonus_rec), 'n'], [window.unFmt(r.adiant_rec), 'n'],
+        [window.unFmt(r.rep_total), 'n tot'], [window.unFmt(r.flat_rep), 'n'], [window.unFmt(r.adiant_rep), 'n'],
+        [window.unFmt(r.spread), 'n' + (r.spread === null ? '' : r.spread < 0 ? ' neg' : r.spread === 0 ? ' zero' : '')],
+        [r.base, 'n']
+      ];
+      cells.forEach(([t, c], i) => {
+        const td = document.createElement('td'); td.className = c; td.textContent = t;
+        if (i === 3 && (r.fonte !== 'Storm' || r.obs)) {
+          const s = document.createElement('span'); s.className = 'un-src';
+          s.textContent = (r.fonte !== 'Storm' ? 'Fonte: ' + r.fonte + ' (só recebido)' : '') + (r.obs ? (r.fonte !== 'Storm' ? ' · ' : '') + r.obs : '');
+          td.append(s);
+        }
+        tr.append(td);
+      });
+      el.append(tr);
+    });
+  });
+</script>
+
+<script>
+  window.dash.drawAll();
+  let unT; let unW = window.innerWidth;
+  window.addEventListener('resize', () => { if (window.innerWidth === unW) return; unW = window.innerWidth; clearTimeout(unT); unT = setTimeout(() => window.dash.drawAll(), 150); });
+</script>
+</div>
+</body>
+</html>
